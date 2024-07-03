@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
+import '../../logic/home_view_model.dart';
 import '../../themes/global_color.dart';
 import '../widgets/buttons/custom_floating_action_button.dart';
 import '../widgets/custom_container_widget.dart';
 import '../widgets/custom_story_container_widget.dart';
 import '../widgets/drawer_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeViewModel homeViewModel = HomeViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    homeViewModel.getList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +48,23 @@ class HomeScreen extends StatelessWidget {
                       const Icon(Icons.star_border, color: GlobalColor.primary))
             ]),
         floatingActionButton: const CustomFloatingActionButton(),
-        body: SafeArea(
-            child: ListView.separated(
+        body: SafeArea(child: Obx(() {
+          if (homeViewModel.postList.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.separated(
                 separatorBuilder: (context, i) => const Divider(),
-                itemCount: 5,
+                itemCount: homeViewModel.postList.length,
                 itemBuilder: (context, i) {
                   return CustomContainerWidget(
-                    name: 'Sofía',
-                    username: 'sofia1234',
-                    description: 'Hola hola hola hola hola',
-                    profilePhoto:
-                        'https://i.pinimg.com/280x280_RS/1b/80/4f/1b804f161e7b31b98ba5b1586ea2cd4a.jpg',
-                    time: '1m',
+                    name: homeViewModel.postList[i].name,
+                    username: homeViewModel.postList[i].username,
+                    description: homeViewModel.postList[i].description,
+                    profilePhoto: homeViewModel.postList[i].profilePhoto,
+                    time: homeViewModel.postList[i].time,
                   );
-                })));
+                });
+          }
+        })));
   }
 }

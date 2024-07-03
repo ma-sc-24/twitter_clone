@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'src/themes/global_theme.dart';
-import 'src/ui/screens/initial_screen.dart';
+import 'src/ui/screens/base_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Twitter App Clone',
       debugShowCheckedModeBanner: false,
       theme: GlobalTheme.theme(),
-      home: const InitialScreen(),
+      home: const BaseScreen(),
     );
   }
 }

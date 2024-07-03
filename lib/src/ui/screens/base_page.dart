@@ -37,42 +37,43 @@ class _BaseScreenState extends State<BaseScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: Material(
-            elevation: 1,
-            child: StreamBuilder(
-                stream: authViewModel.isLogged(),
-                builder: (context, AsyncSnapshot<User?> snapshot) {
-                  if (snapshot.hasData && (!snapshot.data!.isAnonymous)) {
-                    return Container(
-                        color: Colors.white,
-                        child: TabBar(
-                            indicatorSize: TabBarIndicatorSize.label,
-                            indicatorColor: GlobalColor.primary,
-                            controller: tabController,
-                            tabs: const [
-                              Tab(
-                                  icon: Icon(Icons.home_outlined,
-                                      color: GlobalColor.textColor)),
-                              Tab(
-                                  icon: Icon(Icons.search_outlined,
-                                      color: GlobalColor.textColor)),
-                              Tab(
-                                  icon: Icon(Icons.notifications_none_outlined,
-                                      color: GlobalColor.textColor)),
-                              Tab(
-                                  icon: Icon(Icons.email_outlined,
-                                      color: GlobalColor.textColor)),
-                            ]));
-                  } else {
-                    return LoginScreen();
-                  }
-                })),
+          elevation: 1,
+          child: Container(
+              color: Colors.white,
+              child: StreamBuilder(
+                  stream: authViewModel.isLogged(),
+                  builder: (context, AsyncSnapshot<User?> snapshot) {
+                    if (snapshot.hasData && (!snapshot.data!.isAnonymous)) {
+                      return TabBar(
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicatorColor: GlobalColor.primary,
+                          controller: tabController,
+                          tabs: const [
+                            Tab(
+                                icon: Icon(Icons.home_outlined,
+                                    color: GlobalColor.textColor)),
+                            Tab(
+                                icon: Icon(Icons.search_outlined,
+                                    color: GlobalColor.textColor)),
+                            Tab(
+                                icon: Icon(Icons.notifications_none_outlined,
+                                    color: GlobalColor.textColor)),
+                            Tab(
+                                icon: Icon(Icons.email_outlined,
+                                    color: GlobalColor.textColor)),
+                          ]);
+                    } else {
+                      return LoginScreen();
+                    }
+                  })),
+        ),
         body: TabBarView(controller: tabController, children: const [
           HomeScreen(),
           OthersScreen(titleScreen: 'Search Screen'),
           OthersScreen(titleScreen: 'Notification Screen'),
           OthersScreen(
             titleScreen: 'Messaging Screen',
-          ),
+          )
         ]));
   }
 }
