@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "144868860356",
+    "project_id": "twitter-clone-14504",
+    "storage_bucket": "twitter-clone-14504.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144868860356:android:489e31f97ec1cf017d8491",
+        "android_client_info": {
+          "package_name": "com.msalazar.twitter_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpicinoH9dMjk85tdcFwxHsP_k3VwwYvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../logic/auth_view_model.dart';
 import '../../themes/global_color.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../widgets/input.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  final RxString email = ''.obs;
-  final RxString password = ''.obs;
-
-  final RxBool isNextButtonClicked = false.obs;
+  final AuthViewModel authViewModel = AuthViewModel();
 
   LoginScreen({super.key});
 
@@ -43,27 +41,35 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () {},
                         child: const Text('Forgot password?')),
                     CustomButtonWidget(
-                        title: (!isNextButtonClicked.value) ? 'Next' : 'Login',
-                        isActive: ((email.value.isNotEmpty &&
-                                !isNextButtonClicked.value) ||
-                            password.value.isNotEmpty),
-                        onPressed: () {
-                          if (email.value.isNotEmpty) {
-                            isNextButtonClicked.value = true;
+                        title: (!authViewModel.isNextButtonClicked.value)
+                            ? 'Next'
+                            : 'Login',
+                        isActive: ((authViewModel.email.value.isNotEmpty &&
+                                !authViewModel.isNextButtonClicked.value) ||
+                            authViewModel.password.value.isNotEmpty),
+                        onPressed: () async {
+                          if (authViewModel.email.value.isNotEmpty) {
+                            authViewModel.isNextButtonClicked.value = true;
                           }
 
-                          if (email.value.isNotEmpty &&
-                              password.value.isNotEmpty) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const HomeScreen()));
+                          if (authViewModel.email.value.isNotEmpty &&
+                              authViewModel.password.value.isNotEmpty) {
+                            bool state = await authViewModel.login();
+
+                            if (state) {
+                              if (context.mounted) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const HomeScreen()));
+                              }
+                            }
                           }
                         })
                   ])),
           backgroundColor: GlobalColor.background,
           body: SafeArea(
-              child: (isNextButtonClicked.value)
+              child: (authViewModel.isNextButtonClicked.value)
                   ? passwordFragment()
                   : emailFragment()),
         ));
@@ -86,9 +92,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Input(
                   hintText: 'Phone, email, or username',
-                  onPressed: (value) {
-                    email.value = value;
-                  },
+                  onPressed: (value) => authViewModel.email.value = value,
                   validator: (value) => '',
                   type: TextInputType.emailAddress)
             ])));
@@ -110,7 +114,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 10),
               PasswordInput(
                 hintText: 'Password',
-                onPressed: (value) => password.value = value,
+                onPressed: (value) => authViewModel.password.value = value,
                 type: TextInputType.visiblePassword,
                 validator: (value) => '',
               )
