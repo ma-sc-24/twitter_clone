@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../../logic/home_view_model.dart';
 import '../../themes/global_color.dart';
-import '../widgets/buttons/custom_floating_action_button.dart';
 import '../widgets/custom_container_widget.dart';
 import '../widgets/custom_story_container_widget.dart';
 import '../widgets/drawer_widget.dart';
+import 'tweet_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const DrawerWidget(),
+        drawer: DrawerWidget(),
         backgroundColor: Colors.white,
         appBar: AppBar(
             elevation: 1,
@@ -37,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: const FaIcon(FontAwesomeIcons.twitter,
                 color: GlobalColor.primary),
             centerTitle: true,
-            bottom: const PreferredSize(
-              preferredSize: Size.fromHeight(75),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(75),
               child: CustomStoryContainerWidget(),
             ),
             actions: [
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon:
                       const Icon(Icons.star_border, color: GlobalColor.primary))
             ]),
-        floatingActionButton: const CustomFloatingActionButton(),
+        floatingActionButton: fab(),
         body: SafeArea(child: Obx(() {
           if (homeViewModel.postList.isEmpty) {
             return const Center(child: CircularProgressIndicator());
@@ -66,5 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
           }
         })));
+  }
+
+  Widget fab() {
+    return FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => TweetScreen()))
+              .then((_) => homeViewModel.getList());
+        },
+        backgroundColor: GlobalColor.primary,
+        shape: const CircleBorder(),
+        child: const FaIcon(FontAwesomeIcons.feather, color: Colors.white));
   }
 }

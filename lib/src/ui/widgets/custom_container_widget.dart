@@ -51,7 +51,7 @@ class CustomContainerWidget extends StatelessWidget {
                       descriptionTextStyle: const TextStyle(
                           fontSize: 12, color: GlobalColor.textColor)),
                   Text(description),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../themes/global_color.dart';
+import '../../themes/global_color.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final Function()? onPressed;

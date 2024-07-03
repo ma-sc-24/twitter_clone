@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../logic/auth_view_model.dart';
 import '../../themes/global_color.dart';
-import '../widgets/buttons/custom_button_widget.dart';
+import '../widgets/custom_button_widget.dart';
 import '../widgets/input.dart';
 import 'base_page.dart';
 

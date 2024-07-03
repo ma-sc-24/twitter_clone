@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:format_label/format_label.dart';
 
+import '../../logic/home_view_model.dart';
 import '../../themes/global_color.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+  final HomeViewModel homeViewModel = HomeViewModel();
+
+  DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +21,15 @@ class DrawerWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                           radius: 40,
-                          backgroundImage: NetworkImage(
-                              'https://i.pinimg.com/280x280_RS/1b/80/4f/1b804f161e7b31b98ba5b1586ea2cd4a.jpg')),
+                          backgroundImage:
+                              NetworkImage(homeViewModel.profilePhoto)),
                       const SizedBox(height: 10),
-                      Text('Nombre Apeelido',
+                      Text(homeViewModel.name,
                           style: const TextStyle(fontWeight: FontWeight.bold)),
-                      Text('@username',
+                      Text('@${homeViewModel.username}',
                           style: const TextStyle(fontWeight: FontWeight.w400)),
                       const SizedBox(height: 20),
-                      Row(
+                      const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             FormatLabel(
@@ -34,19 +37,17 @@ class DrawerWidget extends StatelessWidget {
                                 description: 'Following',
                                 descriptionTextWeight: FontWeight.bold,
                                 mainTextWeight: FontWeight.normal,
-                                mainTextStyle:
-                                    const TextStyle(color: Colors.black),
+                                mainTextStyle: TextStyle(color: Colors.black),
                                 descriptionTextStyle:
-                                    const TextStyle(color: Colors.black)),
+                                    TextStyle(color: Colors.black)),
                             FormatLabel(
                                 mainText: '632',
                                 description: 'Followers',
                                 descriptionTextWeight: FontWeight.bold,
                                 mainTextWeight: FontWeight.normal,
-                                mainTextStyle:
-                                    const TextStyle(color: Colors.black),
+                                mainTextStyle: TextStyle(color: Colors.black),
                                 descriptionTextStyle:
-                                    const TextStyle(color: Colors.black))
+                                    TextStyle(color: Colors.black))
                           ]),
                       const SizedBox(height: 20),
                       itemButton(Icons.person, 'Profile'),

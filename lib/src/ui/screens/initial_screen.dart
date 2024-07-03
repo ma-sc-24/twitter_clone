@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:format_label/format_label.dart';
 
 import '../../themes/global_color.dart';
-import '../widgets/buttons/custom_button_icon_widget.dart';
-import '../widgets/buttons/custom_button_widget.dart';
+import '../widgets/custom_button_icon_widget.dart';
+import '../widgets/custom_button_widget.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 
